@@ -79,7 +79,7 @@ class OrderStore {
             if (order.status !== "complete") {
                 throw new Error(`Can't add product ${productId} to order ${orderId}. Order status is ${order.status}`);
             }
-            return result.rows[0];
+            return order;
         }
         catch (err) {
             throw new Error(`Can't add product ${productId} to order ${orderId}. Error: ${err}`);

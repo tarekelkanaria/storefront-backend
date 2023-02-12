@@ -7,7 +7,7 @@ const request = supertest(app);
 const tokenSecret = process.env.TOKEN_SECRET as string;
 const user = new UserStore();
 
-describe("Users endpoint responses should be successful", () => {
+describe("Orders endpoint responses should be successful", () => {
   let token: string;
   beforeAll(async () => {
     const loginUser = await user.authenticate(
@@ -16,51 +16,54 @@ describe("Users endpoint responses should be successful", () => {
     );
     token = jwt.sign({ loginUser }, tokenSecret);
   });
-  it("create new user", async () => {
+  it("Create user", async () => {
+    const testUser = await user.create({
+      first_name: "test_",
+      last_name: "admine",
+      password_digest: "test-password123",
+    });
     const response = await request
       .post("/users")
       .set("Authorization", `Bearer ${token}`)
+      .send(testUser);
+    expect(response.status).toBe(200);
+  });
+  it("post new order", async () => {
+    const response = await request
+      .post("/orders")
+      .set("Authorization", `Bearer ${token}`)
       .send({
-        first_name: "test-admine",
-        last_name: "all cases",
-        password_digest: "test-password123",
+        status: "active",
+        user_id: 1,
       });
     expect(response.status).toBe(200);
   });
-  it("get the list of users", async () => {
+  it("get the list of orders", async () => {
     const response = await request
-      .get("/users")
+      .get("/orders")
       .set("Authorization", `Bearer ${token}`);
     expect(response.status).toBe(200);
   });
-  it("get user with id 2", async () => {
+  it("get order with id 1", async () => {
     const response = await request
-      .get("/users/2")
+      .get("/orders/1")
       .set("Authorization", `Bearer ${token}`);
     expect(response.status).toBe(200);
   });
 
-  it("update user with id 2", async () => {
+  it("update order with id 1", async () => {
     const response = await request
-      .put("/users/2")
+      .put("/orders/1")
       .set("Authorization", `Bearer ${token}`)
       .send({
-        first_name: "second test-admine",
-        last_name: "all conditions",
-        password_digest: "test-password123",
+        status: "complete",
+        user_id: 1,
       });
     expect(response.status).toBe(200);
   });
-  it("post user auth should be successful", async () => {
+  it("delete order with id 1", async () => {
     const response = await request
-      .post("/users/2/auth")
-      .set("Authorization", `Bearer ${token}`)
-      .send({ userName: "second test-admine", password: "test-password123" });
-    expect(response.status).toBe(200);
-  });
-  it("delete user with id 2", async () => {
-    const response = await request
-      .delete("/users/2")
+      .delete("/orders/1")
       .set("Authorization", `Bearer ${token}`);
     expect(response.status).toBe(200);
   });
