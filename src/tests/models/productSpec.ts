@@ -28,7 +28,7 @@ describe("Product Model", () => {
       category: "Food",
     } as Product);
     expect(result).toEqual({
-      id: 1,
+      id: 2,
       name: "Product A",
       price: 20,
       category: "Food",
@@ -39,7 +39,7 @@ describe("Product Model", () => {
     const result = await store.index();
     expect(result).toEqual([
       {
-        id: 1,
+        id: 2,
         name: "Product A",
         price: 20,
         category: "Food",
@@ -48,9 +48,9 @@ describe("Product Model", () => {
   });
 
   it("Show method should return the correct product", async () => {
-    const result = await store.show("1");
+    const result = await store.show("2");
     expect(result).toEqual({
-      id: 1,
+      id: 2,
       name: "Product A",
       price: 20,
       category: "Food",
@@ -59,13 +59,13 @@ describe("Product Model", () => {
 
   it("Update method should return the correct product", async () => {
     const result = await store.update({
-      id: "1",
+      id: "2",
       name: "Product B",
       price: 30,
       category: "Flowers",
     });
     expect(result).toEqual({
-      id: 1,
+      id: 2,
       name: "Product B",
       price: 30,
       category: "Flowers",
@@ -76,7 +76,7 @@ describe("Product Model", () => {
     const result = await store.productsByCategory("Flowers");
     expect(result).toEqual([
       {
-        id: 1,
+        id: 2,
         name: "Product B",
         price: 30,
         category: "Flowers",
@@ -85,7 +85,7 @@ describe("Product Model", () => {
   });
 
   it("Delete method should remove the correct product", async () => {
-    await store.delete("1");
+    await store.delete("2");
     const result = await store.index();
     expect(result).toEqual([]);
   });

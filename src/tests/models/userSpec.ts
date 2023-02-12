@@ -37,14 +37,14 @@ describe("User Model", () => {
   });
 
   it("Show method should return the correct user", async () => {
-    const result = await store.show("1");
+    const result = await store.show("2");
     expect(result.first_name).toEqual("John");
     expect(result.last_name).toEqual("Doe");
   });
 
   it("Update method should return the correct user", async () => {
     const result = await store.update({
-      id: "1",
+      id: "2",
       first_name: "Johny",
       last_name: "Cash",
       password_digest: "123456789",
@@ -59,7 +59,7 @@ describe("User Model", () => {
   });
 
   it("Delete method should remove the correct user", async () => {
-    await store.delete("1");
+    await store.delete("2");
     const result = await store.index();
     expect(result).toEqual([]);
   });

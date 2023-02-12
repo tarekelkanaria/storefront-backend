@@ -16,7 +16,7 @@ const fivePopularProducts = async (req: Request, res: Response) => {
 
 const currentOrders = async (req: Request, res: Response) => {
   try {
-    const orders = await store.currentOrders(req.body.user_id);
+    const orders = await store.currentOrders(req.params.id);
     res.json(orders);
   } catch (err) {
     res.status(400);
@@ -26,7 +26,7 @@ const currentOrders = async (req: Request, res: Response) => {
 
 const completedOrders = async (req: Request, res: Response) => {
   try {
-    const orders = await store.completedOrders(req.body.user_id);
+    const orders = await store.completedOrders(req.params.id);
     res.json(orders);
   } catch (err) {
     res.status(400);

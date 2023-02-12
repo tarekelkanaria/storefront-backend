@@ -65,16 +65,55 @@ These are the notes from a meeting with the frontend developer that describe wha
 
 ### products table
 
-id: SERIAL PR KEY, name string NOT NULL, price INTEGER NOT NULL, category string.
+**Column**  
+id, name, price, category  
+**Type**  
+integer, character varying(150), integer, character varying(150)  
+**Nullable**  
+not null, not null, not null, not specified  
+**Indexes**  
+"products_pkey" PRIMARY KEY, btree (id)  
+**Referenced by**  
+TABLE "order_products" CONSTRAINT "order_products_product_id_fkey" FOREIGN KEY (product_id) REFERENCES products(id)
 
 ### users table
 
-id: SERIAL PR KEY, first_name string NOT NULL, last_name string NOT NULL, password_digest text NOT NULL.
+**Column**  
+id, first_name, last_name, password_digest  
+**Type**  
+integer, character varying(255), character varying(255), text  
+**Nullable**  
+not null, not null, not null, not null  
+**Indexes**  
+"users_pkey" PRIMARY KEY, btree (id)  
+**Referenced by**  
+TABLE "orders" CONSTRAINT "orders_user_id_fkey" FOREIGN KEY (use_id) REFERENCES users(id)
 
 ### orders table
 
-id: SERIAL PR KEY, status string NOT NULL, user_id bigint NOT NULL REFERENCES users(id).
+**Column**  
+id, status, user_id  
+**Type**  
+integer, character varying(150), bigint  
+**Nullable**  
+not null, not null, not null  
+**Indexes**  
+"orders_pkey" PRIMARY KEY, btree (id)  
+**Foreign-key constraints**  
+"orders_user_id_fkey" FOREIGN KEY (user_id) REFERENCES users(id)  
+**Referenced by**  
+TABLE "order_products" CONSTRAINT "order_products_order_id_fkey" FOREIGN KEY (order_id) REFERENCES orders(id)
 
 ### order_products table
 
-id: SERIAL PR KEY, quantity integer NOT NULL, order_id bigint NOT NULL REFERENCES orders(id), product_id bigint NOT NULL REFERENCES products(id).
+**Column**  
+id, quantity, order_id, product_id  
+**Type**  
+integer, integer, bigint, bigint  
+**Nullable**  
+not null, not null, not specified, not specified  
+**Indexes**  
+"order_products_pkey" PRIMARY KEY, btree (id)  
+**Foreign-key constraints**  
+"order_products_order_id_fkey" FOREIGN KEY (order_id) REFERENCES orders(id)  
+"order_products_product_id_fkey" FOREIGN KEY (product_id) REFERENCES products(id)

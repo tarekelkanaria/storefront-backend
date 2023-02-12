@@ -5,13 +5,23 @@ import verifyAuthToken from "../middlewares/auth";
 const store = new OrderStore();
 
 const index = async (_req: Request, res: Response) => {
-  const orders = await store.index();
-  res.json(orders);
+  try {
+    const orders = await store.index();
+    res.json(orders);
+  } catch (err) {
+    res.status(400);
+    res.json(err);
+  }
 };
 
 const show = async (req: Request, res: Response) => {
-  const order = await store.show(req.params.id);
-  res.json(order);
+  try {
+    const order = await store.show(req.params.id);
+    res.json(order);
+  } catch (err) {
+    res.status(400);
+    res.json(err);
+  }
 };
 
 const create = async (req: Request, res: Response) => {
@@ -42,8 +52,13 @@ const update = async (req: Request, res: Response) => {
 };
 
 const remove = async (req: Request, res: Response) => {
-  const order = await store.delete(req.params.id);
-  res.json(order);
+  try {
+    const order = await store.delete(req.params.id);
+    res.json(order);
+  } catch (err) {
+    res.status(400);
+    res.json(err);
+  }
 };
 
 const addProduct = async (req: Request, res: Response) => {
@@ -62,8 +77,8 @@ const addProduct = async (req: Request, res: Response) => {
 };
 
 const order_routes = (app: express.Application) => {
-  app.get("/orders", index);
-  app.get("/orders/:id", show);
+  app.get("/orders", verifyAuthToken, index);
+  app.get("/orders/:id", verifyAuthToken, show);
   app.post("/orders", verifyAuthToken, create);
   app.put("/orders/:id", verifyAuthToken, update);
   app.delete("/orders/:id", verifyAuthToken, remove);

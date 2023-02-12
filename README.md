@@ -31,6 +31,21 @@ database-port = 5432
 `npm install`  
 will include node_modules folder to work with dependencies.
 
+## Database Setup
+
+install and connect to postgres through the terminal.  
+follow the commands below after installing postgres:
+
+```
+sudo su - postgres
+psql postgres
+CREATE USER store_admine WITH PASSWORD 'elkanaria123';
+CREATE DATABASE store;
+CREATE DATABASE store_test;
+GRANT ALL PRIVILEGES ON DATABASE store TO store_admine;
+GRAT ALL PRIVILEGES ON DATABASE store_test TO store_admine;
+```
+
 ## Available scripts
 
 `npm run build`
