@@ -64,7 +64,7 @@ const remove = async (req: Request, res: Response) => {
 const addProduct = async (req: Request, res: Response) => {
   const quantity = parseInt(req.body.quantity);
   const order_id = parseInt(req.params.id);
-  const product_id = parseInt(req.body.product_id);
+  const product_id = parseInt(req.params.Product);
 
   try {
     const addedProduct = await store.addProduct(quantity, order_id, product_id);
@@ -82,7 +82,7 @@ const order_routes = (app: express.Application) => {
   app.post("/orders", verifyAuthToken, create);
   app.put("/orders/:id", verifyAuthToken, update);
   app.delete("/orders/:id", verifyAuthToken, remove);
-  app.post("/orders/:id/products", verifyAuthToken, addProduct);
+  app.post("/orders/:id/:product", verifyAuthToken, addProduct);
 };
 
 export default order_routes;

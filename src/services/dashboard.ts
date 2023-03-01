@@ -1,10 +1,10 @@
-import client from "../database";
+import Client from "../database";
 
 export class DashboardQueries {
   async fivePopularProducts(): Promise<
     { name: string; price: number; category?: string }[]
   > {
-    const connection = await client.connect();
+    const connection = await Client.connect();
     try {
       const sql =
         "SELECT name, price, category FROM products INNER JOIN order_products ON products.id=order_products.product_id ORDER BY quantity DESC LIMIT 5;";
@@ -19,7 +19,7 @@ export class DashboardQueries {
   async currentOrders(
     userId: string
   ): Promise<{ status: string; quantity: number }[]> {
-    const connection = await client.connect();
+    const connection = await Client.connect();
     try {
       const sql =
         "SELECT status, quantity FROM orders INNER JOIN order_products ON orders.id=order_products.order_id WHERE user_id=($1);";
@@ -35,7 +35,7 @@ export class DashboardQueries {
   async completedOrders(
     userId: string
   ): Promise<{ status: string; quantity: number }[]> {
-    const connection = await client.connect();
+    const connection = await Client.connect();
     try {
       const sql =
         "SELECT status, quantity FROM orders INNER JOIN order_products ON orders.id=order_products.order_id WHERE (user_id=($1) and status='complete');";

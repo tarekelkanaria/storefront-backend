@@ -6,8 +6,8 @@
   "scripts": {
     "build": "npx tsc",
     "migrate": "db-migrate --env test up && db-migrate up",
-    "test": "ENV=test && npx tsc && db-migrate --env test up && jasmine && db-migrate db:drop test",
-    "test:win": "npx tsc && db-migrate --env test up && jasmine && db-migrate db:drop test",
+    "test": "export ENV=test && npx tsc && db-migrate --env test up && jasmine && db-migrate db:drop test",
+    "test:win": "set ENV=test && npx tsc && db-migrate --env test up && jasmine && db-migrate db:drop test",
     "start": "node dist/server.js",
     "watch": "tsc-watch --esModuleInterop src/server.ts --outDir ./dist --onSuccess \"node ./dist/server.js\""
   },

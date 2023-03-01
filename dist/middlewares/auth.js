@@ -2,15 +2,15 @@
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
-const tokenSecret = process.env.TOKEN_SECRET;
-const verifyAuthToken = (req, res, next) => {
+exports.__esModule = true;
+var jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
+var tokenSecret = process.env.TOKEN_SECRET;
+var verifyAuthToken = function (req, res, next) {
     try {
-        const authHeader = req.headers.authorization;
+        var authHeader = req.headers.authorization;
         if (authHeader) {
-            const token = authHeader.split(" ")[1];
-            const decode = jsonwebtoken_1.default.verify(token, tokenSecret);
+            var token = authHeader.split(" ")[1];
+            var decode = jsonwebtoken_1["default"].verify(token, tokenSecret);
             next();
         }
         else {
@@ -19,7 +19,7 @@ const verifyAuthToken = (req, res, next) => {
     }
     catch (err) {
         res.status(401);
-        res.json(`Invalid authorization. Error: ${err}`);
+        res.json("Invalid authorization. Error: ".concat(err));
     }
 };
-exports.default = verifyAuthToken;
+exports["default"] = verifyAuthToken;
